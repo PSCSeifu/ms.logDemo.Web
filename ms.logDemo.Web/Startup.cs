@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ms.logDemo.Web.Common;
+using Serilog;
 
 namespace ms.logDemo.Web
 {
@@ -20,41 +22,85 @@ namespace ms.logDemo.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            InitLogging();
         }
 
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configures Services
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddMvc();
+            AddApplicationInsights(services);
+            AddMvc(services);
+            AddBusiness(services);
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+                
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            UseExceptionHandling(app, env);
 
             app.UseStaticFiles();
+                       
+            UseLogging(loggerFactory);
 
-            app.UseMvc(routes =>
+            UseMvc(app);
+
+
+        }
+
+        #region " Add Services "
+
+        private void AddApplicationInsights(IServiceCollection services)
+            => services.AddApplicationInsightsTelemetry(Configuration);      
+
+        private void AddMvc(IServiceCollection services) 
+            =>  services.AddMvc();
+
+        private void AddBusiness(IServiceCollection services)
+            => DependencyInjection.Configure(services);
+        
+
+        #endregion
+
+        #region " Use Middleware"
+
+        private void UseExceptionHandling(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage().UseBrowserLink();
+            else
+                app.UseExceptionHandler("/Home/Error/");
+        }
+
+        private void UseMvc(IApplicationBuilder app) 
+            => app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+        private void UseLogging(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole()
+                .AddSerilog()
+                .AddDebug();
         }
+
+
+        #endregion
+
+        #region " Private "
+
+        private static void InitLogging()
+        {
+            var log = new logDemo.Logging.PSCLogging();
+            log.InitLogging();
+        }
+        #endregion
     }
 }
