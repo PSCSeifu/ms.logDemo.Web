@@ -62,7 +62,9 @@ namespace ms.logDemo.Web
 
         private void AddBusiness(IServiceCollection services)
             => DependencyInjection.Configure(services);
-        
+
+        private void AddHttpClient(IServiceCollection services)
+            => services.AddSingleton<IHttpClientsFactory, HttpClientsFactory>();
 
         #endregion
 

@@ -10,9 +10,10 @@ namespace ms.logDemo.Web.Common
     {
         public static void Configure(IServiceCollection services)
         {
-        //    services.AddScoped<IContactService, ContactService>();
-        //    services.AddScoped<IContactRepository, ContactRepository>();
-        //    services.AddScoped<IPSCLogging, PSCLogging>();
+            //    services.AddScoped<IContactService, ContactService>();
+            //    services.AddScoped<IContactRepository, ContactRepository>();
+            //    services.AddScoped<IPSCLogging, PSCLogging>();
+            //  services.AddSingleton<IHttpClientsFactory, HttpClientsFactory>();
         }
     }
 }

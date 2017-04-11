@@ -4,4 +4,9 @@
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ms.LogDemo.Data\ms.LogDemo.Data.csproj" />
+    <ProjectReference Include="..\ms.logDemo.Types\ms.logDemo.Types.csproj" />
+  </ItemGroup>
+
 </Project>
