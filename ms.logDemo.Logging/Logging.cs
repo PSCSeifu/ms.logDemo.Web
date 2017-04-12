@@ -14,7 +14,7 @@ namespace ms.logDemo.Logging
             => Log.Logger = new LoggerConfiguration()
                             .Enrich.WithProperty("Log Demo Web App", "LogDemoWeb")
                             .MinimumLevel.Verbose()
-                            .WriteTo.Seq("http://localhost:5342/")
+                            .WriteTo.Seq("http://localhost:5341/")
                             .CreateLogger();
         
     }

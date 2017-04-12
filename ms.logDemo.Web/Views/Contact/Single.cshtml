@@ -1,0 +1,71 @@
+﻿@model ms.logDemo.Web.Models.Contact.ContactVM
+
+<form method="post">
+    <div role="tabpanel">        
+        <div class="row">
+            <ul class="nav nav-tabs tab-color-blue">
+                <li role="presentation" class="active" ><a href="#Contact" data-toggle="tab">CONTACT</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="Contact">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="Id" class="control-label text-right required col-xs-3"></label>
+                            <div class="col-xs-5">
+                                <input type="text" asp-for="Id" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="Address1" class="control-label col-xs-3"></label>
+                            <div class="col-xs-5">
+                                <input type="text" asp-for="Address1" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="Address2" class="control-label col-xs-3"></label>
+                            <div class="col-xs-5">
+                                <input type="text" asp-for="Address2" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="Age" class="control-label col-xs-3"></label>
+                            <div class="col-xs-5">
+                                <input type="text" asp-for="Age" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <button type="submit">PING</button>
+                            
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <br/>
+  
+    
+</form>
+<script>
+    var tabLink = document.getElementById('#Contact')
+    tabLink.onclick(alert('Javascript works!')));
+</script>
+

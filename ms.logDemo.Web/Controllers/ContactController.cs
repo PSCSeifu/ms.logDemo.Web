@@ -50,6 +50,35 @@ namespace ms.logDemo.Web.Controllers
             }
         }
 
+        public async Task<IActionResult> Single(int id)
+        {
+            try
+            {
+                var contact = await GetItem(id);
+                if (contact != null)
+                {
+                    //Happy Path
+
+                    _logger.LogInformation("Success - fetched Contact  @contact", contact);
+                    return View("Single", contact);
+                }
+                else
+                {
+                    //Unhappy path 
+                    _logger.LogWarning("failed to get Contact @contact", contact);
+                    return StatusCode(400);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Exception 
+                _logger.LogError("Error fetching Contact @ex", ex);
+                return StatusCode(500);
+            }
+           
+        }
+
+        #region " Private "
 
         private async Task<ContactListVM> List()
         {
@@ -76,23 +105,35 @@ namespace ms.logDemo.Web.Controllers
                 throw;
             }
         }
-        public IActionResult About()
+
+       //TODO: Encrypted Parameter
+        private async Task<ContactVM> GetItem(int id)
         {
-            ViewData["Message"] = "Your application description page.";
+            try
+            {
+                var path = $"{_projectAppSettings.Value.AzureAPIServer}/api/Contact/{id}";
+                var client = _httpClientsFactory.Client("AzureAPIServer");
+                var response = await client.GetAsync(path);
+                response.EnsureSuccessStatusCode();
 
-            return View();
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync();
+                    var vm = JsonConvert.DeserializeObject<ContactVM>(result.Result);
+                    return vm;
+                }
+                else
+                {
+                    return new ContactVM();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+        #endregion
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
-        }
     }
 }
