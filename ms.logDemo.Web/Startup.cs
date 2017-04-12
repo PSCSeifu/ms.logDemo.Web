@@ -37,6 +37,8 @@ namespace ms.logDemo.Web
             AddApplicationInsights(services);
             AddMvc(services);
             AddBusiness(services);
+            AddHttpClient(services);
+            AddConfigOptions(services);
         }
                 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -65,6 +67,9 @@ namespace ms.logDemo.Web
 
         private void AddHttpClient(IServiceCollection services)
             => services.AddSingleton<IHttpClientsFactory, HttpClientsFactory>();
+
+        private void AddConfigOptions(IServiceCollection services)
+            => services.Configure<ProjectAppSettings>(options => Configuration.GetSection("ServicePoints").Bind(options));
 
         #endregion
 

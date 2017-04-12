@@ -17,7 +17,7 @@ namespace ms.logDemo.Web.Common
     {
         public static Dictionary<string, HttpClient> HttpClients { get; set; }
         private readonly ILogger<HttpClientsFactory> _logger;
-        private readonly IOptions<ProjectAppSettings> _projectAppSettingsAccessor;
+        private  IOptions<ProjectAppSettings> _projectAppSettingsAccessor;
 
         public HttpClientsFactory(ILogger<HttpClientsFactory> logger,IOptions<ProjectAppSettings> projectAppSettingsAccessor)
         {

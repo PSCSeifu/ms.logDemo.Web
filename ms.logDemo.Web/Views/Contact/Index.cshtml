@@ -1,8 +1,36 @@
-﻿
+﻿@model ms.logDemo.Web.Models.Contact.ContactListVM
 @{
     ViewData["Title"] = "Contact Page";
 }
 
-<div>
-    Contact page 
-</div>
+<form method="post">
+    
+        Contact page
+
+    <div class="row">
+        <label>Count</label>
+        <input type="text" asp-for="Count" />
+    </div>
+    <div>
+        <table>
+            <thead>
+
+            </thead>
+            <tbody>
+                <tr>
+                    
+                    <th>PostCode</th>
+                    <th>Age</th>
+                </tr>
+                @foreach (var item in Model.Items)
+                {
+                   <tr>
+                       
+                       <td>@item.PostCode</td>
+                       <td>@item.Age</td>
+                   </tr>
+                }
+            </tbody>
+        </table>
+    </div>       
+</form>
