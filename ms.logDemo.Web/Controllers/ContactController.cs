@@ -12,6 +12,7 @@ namespace ms.logDemo.Web.Controllers
     {
         private IHttpClientsFactory _httpClientsFactory;
         private readonly ILogger<ContactController> _logger;
+        private ProjectAppSettings _projectAppSettings;
         public ContactController(ILogger<ContactController> logger,IHttpClientsFactory httpClientsFactory)
         {
             _logger = logger;
@@ -22,6 +23,14 @@ namespace ms.logDemo.Web.Controllers
             return View();
         }
 
+
+        public async  Task<IActionResult> List()
+        {
+            var path = $"{_projectAppSettings.LocalAPIServer}/api/Contacts";
+            var client = _httpClientsFactory.Client("LocalAPIServer");
+            var response = await client.GetAsync(path);
+            return Json(response);
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
