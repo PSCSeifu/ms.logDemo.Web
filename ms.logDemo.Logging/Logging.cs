@@ -14,6 +14,7 @@ namespace ms.logDemo.Logging
             => Log.Logger = new LoggerConfiguration()
                             .Enrich.WithProperty("Log Demo Web App", "LogDemoWeb")
                             .MinimumLevel.Verbose()
+                            .WriteTo.AzureLogAnalytics("0c091bfc-a5b8-4deb-ba96-f8c68953228e", "0c091bfc-a5b8-4deb-ba96-f8c68953228e")
                             .WriteTo.Seq("http://localhost:5341/")
                             .CreateLogger();
         

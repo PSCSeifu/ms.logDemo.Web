@@ -10,7 +10,7 @@
     <ApplicationInsightsAnnotationResourceId>/subscriptions/ba08d26c-3893-458a-9a2f-ad632d59b442/resourceGroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/ms.logDemo.Web</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.0-beta1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
