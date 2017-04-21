@@ -32,7 +32,7 @@ namespace ms.logDemo.Web.Controllers
                 {
                     //Happy Path
 
-                    _logger.LogInformation("Success - fetched Contact list @contacts", contacts);
+                    _logger.LogInformation("Success - Fetched Contact list {@Contacts}", contacts);
                     return View(contacts);
                 }
                 else
@@ -59,7 +59,7 @@ namespace ms.logDemo.Web.Controllers
                 {
                     //Happy Path
 
-                    _logger.LogInformation("Success - fetched Contact  @contact", contact);
+                    _logger.LogInformation("Fetched Contact :  {@Contact}", contact);
                     return View("Single", contact);
                 }
                 else

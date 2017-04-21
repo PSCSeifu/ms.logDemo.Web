@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ms.logDemo.Web.Common;
 using Serilog;
+using Microsoft.WindowsAzure.Storage;
 
 namespace ms.logDemo.Web
 {
@@ -43,14 +44,17 @@ namespace ms.logDemo.Web
                 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            UseExceptionHandling(app, env);
-
-            app.UseStaticFiles();
-                       
             UseLogging(loggerFactory);
 
-            UseMvc(app);
+            app.UseApplicationInsightsRequestTelemetry();
 
+            UseExceptionHandling(app, env);
+
+            app.UseApplicationInsightsExceptionTelemetry();
+
+            app.UseStaticFiles();      
+
+            UseMvc(app);
 
         }
 
@@ -107,6 +111,14 @@ namespace ms.logDemo.Web
         {
             var log = new logDemo.Logging.PSCLogging();
             log.InitLogging();
+
+           
+            //Log.Logger = new LoggerConfiguration()
+            //                .Enrich.WithProperty("Log Demo Web App", "LogDemoWeb")
+            //                .MinimumLevel.Verbose()
+            //                .WriteTo.AzureLogAnalytics("0c091bfc-a5b8-4deb-ba96-f8c68953228e", "0c091bfc-a5b8-4deb-ba96-f8c68953228e")
+            //                .WriteTo.Seq("http://localhost:5341/")
+            //                .CreateLogger();
         }
         #endregion
     }
